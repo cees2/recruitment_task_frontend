@@ -1,0 +1,44 @@
+.authForm {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+.authInputWrapper label {
+  display: block;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.authInputWrapper input {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 10px;
+  line-height: 100%;
+  font-size: 14px;
+}
+
+.submitFormButton {
+  max-width: 40%;
+  padding: 12px;
+  background-color: var(--appGreen);
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+.submitFormButton:hover {
+  cursor: pointer;
+  background-color: rgb(75, 156, 40);
+}
+
+h4.authCaption {
+  color: var(--appGreen);
+  font-size: 20px;
+}
+
+.authInputWrapper:nth-child(3) {
+  margin-bottom: 1rem;
+}
