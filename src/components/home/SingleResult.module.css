@@ -1,0 +1,36 @@
+.singleItemWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultsDescriptionRow {
+  margin-bottom: 1rem;
+}
+
+.itemName,
+.itemAmount,
+.itemDescription,
+.itemDate {
+  padding-top: 4px;
+}
+
+.itemName {
+  flex-basis: 20%;
+}
+
+.itemAmount {
+  flex-basis: 15%;
+}
+
+.itemDescription {
+  flex-basis: 35%;
+}
+
+.itemDate {
+  flex-basis: 20%;
+}
+
+.itemActionsWrapper {
+  flex-basis: 10%;
+}

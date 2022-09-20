@@ -1,0 +1,42 @@
+.homePageCaption {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.selectItemWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem auto 0;
+}
+
+.dataResults,
+.selectItemWrapper {
+  color: white;
+  border-radius: 12px;
+  width: 70%;
+  background-color: rgb(129, 129, 129);
+  padding: 1.5rem;
+}
+
+.dataResults {
+  margin: 1rem auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.selectItemWrapper select {
+  border-radius: 6px;
+}
+.searchForItems input {
+  border-radius: 6px;
+}
+
+.searchForItems {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid white;
+}
+
+.searchForItems label {
+  margin-right: 6px;
+}

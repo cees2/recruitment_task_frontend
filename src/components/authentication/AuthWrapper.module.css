@@ -12,3 +12,27 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.errorWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20%;
+  margin: 2rem auto 0;
+  border-radius: 10px;
+  background-color: red;
+  padding: 1rem 0;
+}
+
+.errorHeader {
+  text-align: center;
+  font-weight: 500;
+  color: white;
+  font-size: 14px;
+  margin-right: 1rem;
+}
+
+.errorImage {
+  width: 25px;
+  height: 25px;
+}
