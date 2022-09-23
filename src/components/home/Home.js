@@ -1,53 +1,86 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import classes from "./Home.module.css";
-import resultClasses from "./SingleResult.module.css";
 import { useSelector } from "react-redux";
-import { DOMAIN } from "../../store/authentication";
 import SingleResult from "./SingleResult";
+import useHttp from "../../hooks/use-http";
+import ManageItemsDataModal from "./ManageItemsDataModal";
+import ReactDOM from "react-dom";
 
-const GET_ITEMS_URL = `${DOMAIN}/api/v1/items/`;
+const GET_ITEMS_URL = `http://localhost:3000/api/v1/items`; // do poprawy
 
 const LoginForm = (props) => {
-  const token = useSelector((state) => state.auth.token);
-  const [error, setError] = useState("");
   const [results, setResults] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [searchedResults, setSearchedResults] = useState([]);
+  const [selectedItemType, setSelectedItemType] = useState("");
+  const [createItemModalIsOpened, setCreateItemModalIsOpened] = useState(false);
+  const { sendRequest } = useHttp();
+  const token = useSelector((state) => state.auth.token);
+  const role = useSelector((state) => state.auth.role);
 
   const itemValueChanged = (e) => {
-    setInputValue(e.target.value);
+    setSelectedItemType(e.target.value);
   };
 
+  const updateList = useCallback(async () => {
+    const bearerToken = `Bearer ${token}`;
+
+    const data = await sendRequest({
+      url: `${GET_ITEMS_URL}/${selectedItemType}`,
+      headers: {
+        Authorization: bearerToken,
+      },
+    });
+
+    setResults(data.data.items);
+    setSearchedResults(data.data.items);
+  }, [selectedItemType, token, sendRequest]);
+
   useEffect(() => {
-    const getItemsHandler = async () => {
-      try {
-        if (inputValue === "") {
-          setResults([]);
-          return;
-        }
-        const bearerToken = `Bearer ${token}`;
-        const response = await fetch(`${GET_ITEMS_URL}/${inputValue}`, {
-          headers: {
-            Authorization: bearerToken,
-          },
-        });
+    if (selectedItemType === "") {
+      setResults([]);
+      return;
+    }
+    const recieveData = async () => await updateList();
+    recieveData();
+  }, [selectedItemType, token, sendRequest, updateList]);
 
-        if (!response.ok) throw new Error("Could not fetch that data");
+  const searchByNameHandler = (e) => {
+    if (e.target.value === "") {
+      setSearchedResults(results);
+      return;
+    }
+    setSearchedResults(
+      results.filter((result) => {
+        if (result.name.toUpperCase().startsWith(e.target.value.toUpperCase()))
+          return result;
+      })
+    );
+  };
 
-        const data = await response.json();
+  const modalRejected = () => {
+    setCreateItemModalIsOpened(false);
+  };
 
-        const { items } = data.data;
+  const modalConfirmed = async () => {
+    setCreateItemModalIsOpened(false);
+  };
 
-        setResults(items);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    getItemsHandler();
-  }, [inputValue, token]); // do poprawy
+  const addItemHandler = () => {
+    setCreateItemModalIsOpened(true);
+  };
 
   return (
     <React.Fragment>
+      {createItemModalIsOpened &&
+        ReactDOM.createPortal(
+          <ManageItemsDataModal
+            type="create"
+            onModalRejected={modalRejected}
+            onModalConfirmed={modalConfirmed}
+            onUpdate={updateList}
+          />,
+          document.getElementById("modal-root")
+        )}
       {!token && (
         <h1 className={classes.homePageCaption}>
           Log in or sign up to get access to resources.
@@ -58,10 +91,10 @@ const LoginForm = (props) => {
           <div className={classes.selectItemWrapper}>
             <label htmlFor="selectItem">Select item to get details</label>
             <select id="selectItem" onChange={itemValueChanged}>
-              <option>---</option>
+              <option value="">---</option>
               <option value="pen">Pens</option>
               <option value="printer">Printers</option>
-              <option value="tractor">tractors</option>
+              <option value="tractor">Tractors</option>
               <option value="battery">Batteries</option>
               <option value="window">Windows</option>
               <option value="computer">Coumputers</option>
@@ -70,8 +103,23 @@ const LoginForm = (props) => {
           </div>
           <div className={classes.dataResults}>
             <div className={classes.searchForItems}>
-              <label htmlFor="searchItems">Search by name</label>
-              <input id="searchItems" />
+              <div className={classes.searchItemWrapper}>
+                <label htmlFor="searchItems">Search by name</label>
+                <input id="searchItems" onChange={searchByNameHandler} />
+              </div>
+              {role === "admin" && (
+                <button
+                  className={classes.addItemButton}
+                  onClick={addItemHandler}
+                >
+                  <img
+                    src={require("../../images/add.png")}
+                    alt="Add item"
+                    className={classes.addItemIcon}
+                  />
+                  Add Item
+                </button>
+              )}
             </div>
             <SingleResult
               data={{
@@ -82,8 +130,8 @@ const LoginForm = (props) => {
                 descriptionRow: true,
               }}
             />
-            {results.map((item, i) => (
-              <SingleResult key={i} data={item} />
+            {searchedResults.map((item, i) => (
+              <SingleResult key={i} data={item} onUpdate={updateList} />
             ))}
           </div>
         </>

@@ -2,17 +2,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5rem 0 1rem;
+  border-bottom: 1px solid white;
 }
 
-.resultsDescriptionRow {
-  margin-bottom: 1rem;
+.singleItemWrapper:last-child {
+  border: none;
 }
 
 .itemName,
 .itemAmount,
 .itemDescription,
 .itemDate {
-  padding-top: 4px;
+  padding: 2px;
 }
 
 .itemName {
@@ -24,13 +26,26 @@
 }
 
 .itemDescription {
-  flex-basis: 35%;
+  flex-basis: 43%;
 }
 
 .itemDate {
-  flex-basis: 20%;
+  flex-grow: 1;
 }
 
 .itemActionsWrapper {
-  flex-basis: 10%;
+  flex-basis: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.manageItemIcon {
+  width: 20px;
+  height: 20px;
+  transition: 0.1s linear;
+}
+
+.manageItemIcon:hover {
+  transform: scale(125%);
+  cursor: pointer;
 }

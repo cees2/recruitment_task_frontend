@@ -1,0 +1,39 @@
+.errorWrapper {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -150px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2rem auto 0;
+  border-radius: 10px;
+  padding: 1rem 0;
+  animation: showError 0.2s linear both;
+  border: 2px solid red;
+  background-color: #fff;
+}
+
+@keyframes showError {
+  0% {
+    top: -150px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.errorHeader {
+  text-align: center;
+  font-weight: 500;
+  color: red;
+  font-size: 14px;
+  margin-right: 1rem;
+}
+
+.errorImage {
+  width: 25px;
+  height: 25px;
+  margin: 0 0.5rem;
+}

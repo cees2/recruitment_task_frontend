@@ -5,6 +5,7 @@ const auth = createSlice({
   initialState: {
     token: "",
     error: false,
+    role: null,
   },
   reducers: {
     setToken(state, action) {
@@ -13,11 +14,11 @@ const auth = createSlice({
     removeToken(state) {
       state.token = "";
     },
-    setError(state, action) {
-      state.error = action.payload;
+    setRole(state, action) {
+      state.role = action.payload;
     },
-    removeError(state) {
-      state.error = false;
+    removeRole(state) {
+      state.role = null;
     },
   },
 });

@@ -1,44 +1,54 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import classes from "./AuthForm.module.css";
 import { authActions } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
-import { authenticationManager } from "../../store/authentication";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useHttp, { LOGIN_URL, SIGNUP_URL } from "../../hooks/use-http";
 
 const AuthForm = ({ type }) => {
-  console.log("Component exec");
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordRef = useRef();
   const nameInputRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { sendRequest: sendAuthRequest } = useHttp();
 
   const authenticationHandler = async (e) => {
     e.preventDefault();
     let data;
-    try {
-      const payload = {
-        email: emailInputRef.current.value,
-        password: passwordInputRef.current.value,
-      };
 
-      if (type === "login") data = await authenticationManager(payload);
-      else {
-        payload.passwordConfirm = confirmPasswordRef.current.value;
-        payload.name = nameInputRef.current.value;
-        if (payload.passwordConfirm !== payload.password)
-          throw new Error("Provided passwords do not match.");
-        data = await authenticationManager(payload, false);
-      }
+    const payload = {
+      email: emailInputRef.current.value,
+      password: passwordInputRef.current.value,
+    };
 
-      console.log(data);
-      dispatch(authActions.setToken(data.token));
+    const requestOptions = {
+      body: payload,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      history.replace("/home");
-    } catch (err) {
-      dispatch(authActions.setError(err.message));
+    if (type === "login")
+      data = await sendAuthRequest({
+        url: LOGIN_URL,
+        ...requestOptions,
+      });
+    else {
+      requestOptions.body.passwordConfirm = confirmPasswordRef.current.value;
+      requestOptions.body.name = nameInputRef.current.value;
+      data = await sendAuthRequest({
+        url: SIGNUP_URL,
+        ...requestOptions,
+      });
     }
+
+    dispatch(authActions.setToken(data.token));
+    dispatch(authActions.setRole(data.data.user.role));
+    history.replace("/home");
   };
 
   const caption =
@@ -81,6 +91,9 @@ const AuthForm = ({ type }) => {
             <input id="userName" name="userName" ref={nameInputRef}></input>
           </div>
         )}
+        <Link className={classes.forgotPassword} to="/forgotPassword">
+          I forgot my password
+        </Link>
         <button className={classes.submitFormButton}>{buttonContent}</button>
       </form>
     </React.Fragment>

@@ -37,3 +37,24 @@
   text-decoration: none;
   color: white;
 }
+
+@media (max-width: 1200px) {
+  .mainHeader {
+    padding: 0 3%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainHeader {
+    padding: 0 1%;
+  }
+  .signUpButton,
+  .logInButton {
+    padding: 5px 10px;
+    border-radius: 8px;
+  }
+
+  .logInButton {
+    margin-right: 20px;
+  }
+}

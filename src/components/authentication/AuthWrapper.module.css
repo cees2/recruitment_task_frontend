@@ -1,5 +1,5 @@
 .authWrapper {
-  width: 30%;
+  width: 35%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,26 +13,32 @@
   justify-content: space-between;
 }
 
-.errorWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 20%;
-  margin: 2rem auto 0;
-  border-radius: 10px;
-  background-color: red;
-  padding: 1rem 0;
+@media (max-width: 1400px) {
+  .authWrapper {
+    width: 50%;
+  }
 }
 
-.errorHeader {
-  text-align: center;
-  font-weight: 500;
-  color: white;
-  font-size: 14px;
-  margin-right: 1rem;
+@media (max-width: 1200px) {
+  .authWrapper {
+    width: 60%;
+  }
 }
 
-.errorImage {
-  width: 25px;
-  height: 25px;
+@media (max-width: 992px) {
+  .authWrapper {
+    width: 67%;
+  }
+}
+
+@media (max-width: 768px) {
+  .authWrapper {
+    width: 75%;
+  }
+}
+
+@media (max-width: 576px) {
+  .authWrapper {
+    width: 80%;
+  }
 }

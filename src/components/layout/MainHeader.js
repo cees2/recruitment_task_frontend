@@ -7,7 +7,8 @@ const MainHeader = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
-  const removeError = () => dispatch(authActions.removeError());
+  const removeError = () => {}; // do poprawy
+
   const removeToken = () => dispatch(authActions.removeToken());
 
   return (
