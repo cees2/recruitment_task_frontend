@@ -74,6 +74,10 @@ const ManageItemsDataModal = (props) => {
     props.onModalRejected(false);
   };
 
+  const headerContent =
+    props.type === "update"
+      ? "Fill in properties you want to change"
+      : "Create new item";
   const approveButtonContent = props.type === "update" ? "Update" : "Create";
 
   return (
@@ -82,7 +86,7 @@ const ManageItemsDataModal = (props) => {
       <Backdrop onClick={modalRejected} />
       <div className={classes.modalWrapper}>
         <header className={classes.updateModalHeader}>
-          <h4>Fill in properties you want to change</h4>
+          <h4>{headerContent}</h4>
         </header>
         <div className={classes.updateModalContent}>
           {props.type === "create" && (

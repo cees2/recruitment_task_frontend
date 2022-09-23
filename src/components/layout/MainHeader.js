@@ -2,14 +2,20 @@ import classes from "./MainHeader.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../../store/authSlice";
+import { errorActions } from "../../store/errorSlice";
 
 const MainHeader = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
-  const removeError = () => {}; // do poprawy
+  const removeTokenAndRole = () => {
+    dispatch(authActions.removeToken());
+    dispatch(authActions.removeRole());
+  };
 
-  const removeToken = () => dispatch(authActions.removeToken());
+  const removeError = () => {
+    dispatch(errorActions.removeError());
+  };
 
   return (
     <header className={classes.mainHeader}>
@@ -32,7 +38,7 @@ const MainHeader = () => {
           </Link>
         )}
         {token && (
-          <button className={classes.signUpButton} onClick={removeToken}>
+          <button className={classes.signUpButton} onClick={removeTokenAndRole}>
             Log out
           </button>
         )}

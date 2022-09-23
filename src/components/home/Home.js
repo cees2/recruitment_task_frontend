@@ -90,7 +90,11 @@ const LoginForm = (props) => {
         <>
           <div className={classes.selectItemWrapper}>
             <label htmlFor="selectItem">Select item to get details</label>
-            <select id="selectItem" onChange={itemValueChanged}>
+            <select
+              id="selectItem"
+              onChange={itemValueChanged}
+              className={classes.searchItemsInput}
+            >
               <option value="">---</option>
               <option value="pen">Pens</option>
               <option value="printer">Printers</option>

@@ -46,9 +46,12 @@ const AuthForm = ({ type }) => {
       });
     }
 
-    dispatch(authActions.setToken(data.token));
-    dispatch(authActions.setRole(data.data.user.role));
-    history.replace("/home");
+    if (data) {
+      // User logged in
+      dispatch(authActions.setToken(data.token));
+      dispatch(authActions.setRole(data.data.user.role));
+      history.replace("/home");
+    }
   };
 
   const caption =
@@ -91,9 +94,6 @@ const AuthForm = ({ type }) => {
             <input id="userName" name="userName" ref={nameInputRef}></input>
           </div>
         )}
-        <Link className={classes.forgotPassword} to="/forgotPassword">
-          I forgot my password
-        </Link>
         <button className={classes.submitFormButton}>{buttonContent}</button>
       </form>
     </React.Fragment>

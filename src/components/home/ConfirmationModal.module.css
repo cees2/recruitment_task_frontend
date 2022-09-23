@@ -18,7 +18,7 @@
   flex-direction: column;
   justify-content: space-around;
   border-radius: 6px;
-  background-color: rgb(90, 90, 90);
+  background-color: var(--mainContentColor);
   color: white;
 }
 
@@ -36,22 +36,25 @@
   color: white;
   border: none;
   border-radius: 6px;
+  transition: 0.2s linear;
 }
 
 .confirmButton {
-  background-color: rgb(21, 175, 67);
+  background-color: var(--confirmButtonColor);
 }
 
 .rejectButton {
-  background-color: rgb(227, 0, 0);
+  background-color: var(--rejectButtonColor);
 }
 
 .confirmButton:hover {
-  background-color: rgb(12, 150, 53);
+  background-color: var(--confirmButtonHoverColor);
+  transform: scale(110%);
 }
 
 .rejectButton:hover {
-  background-color: rgb(159, 2, 2);
+  background-color: var(--rejectButtonHoverColor);
+  transform: scale(110%);
 }
 
 .confirmationButtons button:hover {
