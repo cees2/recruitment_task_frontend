@@ -3,7 +3,6 @@ import classes from "./AuthForm.module.css";
 import { authActions } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
 import useHttp, { LOGIN_URL, SIGNUP_URL } from "../../hooks/use-http";
 import { errorActions } from "../../store/errorSlice";
 
