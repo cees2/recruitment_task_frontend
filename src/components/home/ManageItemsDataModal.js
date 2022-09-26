@@ -39,7 +39,7 @@ const ManageItemsDataModal = (props) => {
 
       if (props.type === "update") {
         method = "PATCH";
-        url = `${ITEM_CRUD}/item/${itemId}`;
+        url = `${ITEM_CRUD}/${itemId}`;
       } else if (props.type === "create") {
         const itemType = itemTypeInputRef.current.value;
         if (itemType) requestBody.itemType = itemType;
@@ -49,23 +49,22 @@ const ManageItemsDataModal = (props) => {
         // debugger;
         if (Object.keys(requestBody).length !== 4)
           throw new Error("Fill in every input");
-
-        await sendRequest({
-          url,
-          method,
-          headers: {
-            Authorization: bearerToken,
-            "Content-Type": "application/json",
-          },
-          body: requestBody,
-        });
-
-        props.onModalConfirmed(false);
-        await props.onUpdate();
-        dispatch(errorActions.removeError());
       }
+
+      await sendRequest({
+        url,
+        method,
+        headers: {
+          Authorization: bearerToken,
+          "Content-Type": "application/json",
+        },
+        body: requestBody,
+      });
+
+      props.onModalConfirmed(false);
+      await props.onUpdate();
+      dispatch(errorActions.removeError());
     } catch (err) {
-      console.log(err);
       dispatch(errorActions.setError(err.message));
     }
   };

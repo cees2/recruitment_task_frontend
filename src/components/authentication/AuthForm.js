@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useHttp, { LOGIN_URL, SIGNUP_URL } from "../../hooks/use-http";
+import { errorActions } from "../../store/errorSlice";
 
 const AuthForm = ({ type }) => {
   const emailInputRef = useRef();
@@ -16,41 +17,46 @@ const AuthForm = ({ type }) => {
   const { sendRequest: sendAuthRequest } = useHttp();
 
   const authenticationHandler = async (e) => {
-    e.preventDefault();
-    let data;
+    try {
+      e.preventDefault();
+      let data;
 
-    const payload = {
-      email: emailInputRef.current.value,
-      password: passwordInputRef.current.value,
-    };
+      const payload = {
+        email: emailInputRef.current.value,
+        password: passwordInputRef.current.value,
+      };
 
-    const requestOptions = {
-      body: payload,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const requestOptions = {
+        body: payload,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      };
 
-    if (type === "login")
-      data = await sendAuthRequest({
-        url: LOGIN_URL,
-        ...requestOptions,
-      });
-    else {
-      requestOptions.body.passwordConfirm = confirmPasswordRef.current.value;
-      requestOptions.body.name = nameInputRef.current.value;
-      data = await sendAuthRequest({
-        url: SIGNUP_URL,
-        ...requestOptions,
-      });
-    }
+      if (type === "login")
+        data = await sendAuthRequest({
+          url: LOGIN_URL,
+          ...requestOptions,
+        });
+      else {
+        requestOptions.body.passwordConfirm = confirmPasswordRef.current.value;
+        requestOptions.body.name = nameInputRef.current.value;
+        data = await sendAuthRequest({
+          url: SIGNUP_URL,
+          ...requestOptions,
+        });
+      }
 
-    if (data) {
-      // User logged in
-      dispatch(authActions.setToken(data.token));
-      dispatch(authActions.setRole(data.data.user.role));
-      history.replace("/home");
+      if (data) {
+        // User logged in
+        dispatch(authActions.setToken(data.token));
+        dispatch(authActions.setRole(data.data.user.role));
+        history.replace("/home");
+      }
+    } catch (err) {
+      dispatch(errorActions.setError(err.message));
     }
   };
 

@@ -16,20 +16,20 @@ const useHttp = () => {
       try {
         const response = await fetch(requestConfig.url, {
           method: requestConfig.method || "GET",
-          body: JSON.stringify(requestConfig.body) || null,
+          body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
           headers: requestConfig.headers || {},
         });
+
+        if (response.status === 204) return; // no content
 
         const data = await response.json();
 
         if (!response.ok)
           throw new Error(data.message || "Request failed. Try again later");
 
-        if (response.status === 204) return;
-
         return data;
       } catch (err) {
-        dispatch(errorActions.setError(err.message));
+        throw err;
       }
     },
     [dispatch]

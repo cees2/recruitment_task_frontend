@@ -28,12 +28,13 @@
 .selectItemWrapper select {
   border-radius: 6px;
   background-color: var(--selectInputColor);
+  padding: 0.2rem;
 }
 .searchForItems input {
   border-radius: 6px;
   background-color: var(--selectInputColor);
-  color: white;
   border: none;
+  padding: 0.2rem;
 }
 .searchForItems {
   padding-bottom: 0.5rem;
@@ -41,13 +42,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 18px;
 }
 
 .searchForItems label {
   margin-right: 6px;
 }
-
-/*1400,1200,992,768,576*/
 
 @media (max-width: 992px) {
   .dataResults,
@@ -75,4 +75,10 @@ button.addItemButton:hover {
 .addItemIcon {
   width: 20px;
   height: 20px;
+}
+
+.noItemsParagraph {
+  text-align: center;
+  font-size: 20px;
+  padding-top: 1rem;
 }

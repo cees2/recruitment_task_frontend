@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import classes from "./Home.module.css";
 import { useSelector } from "react-redux";
 import SingleResult from "./SingleResult";
 import useHttp from "../../hooks/use-http";
 import ManageItemsDataModal from "./ManageItemsDataModal";
 import ReactDOM from "react-dom";
+import { ITEM_CRUD } from "../../hooks/use-http";
 
-const GET_ITEMS_URL = `http://localhost:3000/api/v1/items`; // do poprawy
-
-const LoginForm = (props) => {
+const Home = (props) => {
   const [results, setResults] = useState([]);
   const [searchedResults, setSearchedResults] = useState([]);
   const [selectedItemType, setSelectedItemType] = useState("");
@@ -16,7 +15,6 @@ const LoginForm = (props) => {
   const { sendRequest } = useHttp();
   const token = useSelector((state) => state.auth.token);
   const role = useSelector((state) => state.auth.role);
-
   const itemValueChanged = (e) => {
     setSelectedItemType(e.target.value);
   };
@@ -25,7 +23,7 @@ const LoginForm = (props) => {
     const bearerToken = `Bearer ${token}`;
 
     const data = await sendRequest({
-      url: `${GET_ITEMS_URL}/${selectedItemType}`,
+      url: `${ITEM_CRUD}/item/${selectedItemType}`,
       headers: {
         Authorization: bearerToken,
       },
@@ -35,9 +33,18 @@ const LoginForm = (props) => {
     setSearchedResults(data.data.items);
   }, [selectedItemType, token, sendRequest]);
 
+  const memoizedList = useMemo(
+    () =>
+      searchedResults.map((item, i) => (
+        <SingleResult key={i} data={item} onUpdate={updateList} />
+      )),
+    [searchedResults]
+  );
+
   useEffect(() => {
     if (selectedItemType === "") {
       setResults([]);
+      setSearchedResults([]);
       return;
     }
     const recieveData = async () => await updateList();
@@ -134,9 +141,12 @@ const LoginForm = (props) => {
                 descriptionRow: true,
               }}
             />
-            {searchedResults.map((item, i) => (
-              <SingleResult key={i} data={item} onUpdate={updateList} />
-            ))}
+            {memoizedList.length === 0 && (
+              <p className={classes.noItemsParagraph}>
+                No items found. Choose item or search again.
+              </p>
+            )}
+            {memoizedList}
           </div>
         </>
       )}
@@ -144,4 +154,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default Home;

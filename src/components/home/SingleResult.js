@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 import useHttp from "../../hooks/use-http";
 import { useDispatch } from "react-redux";
 import { errorActions } from "../../store/errorSlice";
-
-const DOMAIN = "http://localhost:3000";
+import { ITEM_CRUD } from "../../hooks/use-http";
 
 const SingleResult = (props) => {
+  console.log(props.data.name);
   const token = useSelector((state) => state.auth.token);
   const role = useSelector((state) => state.auth.role);
   const {
@@ -33,11 +33,11 @@ const SingleResult = (props) => {
         const bearerToken = `Bearer ${token}`;
 
         await sendRequest({
-          url: `${DOMAIN}/api/v1/items/item/${id}`,
+          url: `${ITEM_CRUD}/${id}`,
+          method: "DELETE",
           headers: {
             Authorization: bearerToken,
           },
-          method: "DELETE",
         });
 
         await props.onUpdate();
