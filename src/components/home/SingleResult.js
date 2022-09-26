@@ -10,7 +10,6 @@ import { errorActions } from "../../store/errorSlice";
 import { ITEM_CRUD } from "../../hooks/use-http";
 
 const SingleResult = (props) => {
-  console.log(props.data.name);
   const token = useSelector((state) => state.auth.token);
   const role = useSelector((state) => state.auth.role);
   const {

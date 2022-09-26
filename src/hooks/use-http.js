@@ -2,10 +2,10 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { errorActions } from "../store/errorSlice";
 
-export const DOMAIN = "http://localhost:3000/api/v1";
-export const LOGIN_URL = `${DOMAIN}/users/login`;
-export const SIGNUP_URL = `${DOMAIN}/users/signup`;
-export const ITEM_CRUD = `${DOMAIN}/items`;
+export const BASIC_PATH = "/api/v1";
+export const LOGIN_URL = `${BASIC_PATH}/users/login`;
+export const SIGNUP_URL = `${BASIC_PATH}/users/signup`;
+export const ITEM_CRUD = `${BASIC_PATH}/items`;
 
 const useHttp = () => {
   const dispatch = useDispatch();
