@@ -7,7 +7,7 @@ If user is not logged in he/she does not have access to the resources. User can 
 ***User*** can only view and update item.\
 ***Admin*** the same privileges as user, in addition: deleting items(after confirmation), adding new items.
 
-## *Technologies on frontend:*
+## *Technologies used on frontend:*
 React\
 Redux toolkit\
 React router v5\
