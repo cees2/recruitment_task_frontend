@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { errorActions } from "../store/errorSlice";
 
-export const BASIC_PATH = "/api/v1";
+export const BASIC_PATH = "http://zad-rekr.herokuapp.com/api/v1";
 export const LOGIN_URL = `${BASIC_PATH}/users/login`;
 export const SIGNUP_URL = `${BASIC_PATH}/users/signup`;
 export const ITEM_CRUD = `${BASIC_PATH}/items`;
