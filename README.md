@@ -1,4 +1,4 @@
-### https://recruitmenttaskdamianmirek.netlify.app/home
+### https://recruitmenttaskdamianmirek.netlify.app
 
 ### recruitment_task_frontend
 I've decided to make recruitment tasks one company sent me to do in the past. It's **MERN** app. If user is not logged in he/she does not have access to the resources. User can either log in or sing up. When auth token is present user can see list of goods. List content can be changed when type of items or text input is changed. There are two types of users: ***user, admin***.
