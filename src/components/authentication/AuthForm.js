@@ -30,8 +30,8 @@ const AuthForm = ({ type }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          withCredentials: true,
         },
-        credentials: "include",
       };
 
       if (type === "login")
