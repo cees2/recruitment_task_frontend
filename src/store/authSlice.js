@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const auth = createSlice({
   name: "token",
   initialState: {
-    token: "",
+    token: localStorage.getItem("jwt"),
     error: false,
     role: null,
   },
