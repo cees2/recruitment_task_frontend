@@ -32,6 +32,7 @@ const AuthForm = ({ type }) => {
           "Content-Type": "application/json",
           withCredentials: true,
         },
+        credentials: "include",
       };
 
       if (type === "login")
