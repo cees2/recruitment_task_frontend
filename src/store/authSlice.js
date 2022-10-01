@@ -12,6 +12,7 @@ const auth = createSlice({
       state.token = action.payload;
     },
     removeToken(state) {
+      localStorage.removeItem("jwt");
       state.token = "";
     },
     setRole(state, action) {
