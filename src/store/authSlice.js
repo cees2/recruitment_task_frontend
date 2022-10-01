@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const auth = createSlice({
   name: "token",
   initialState: {
-    token: localStorage.getItem("jwt"),
+    token: JSON.parse(localStorage.getItem("jwt")),
     error: false,
     role: null,
   },
   reducers: {
     setToken(state, action) {
+      localStorage.setItem("jwt", JSON.stringify(action.payload));
       state.token = action.payload;
     },
     removeToken(state) {

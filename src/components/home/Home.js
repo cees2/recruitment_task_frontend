@@ -20,12 +20,10 @@ const Home = (props) => {
   };
 
   const updateList = useCallback(async () => {
-    const bearerToken = `Bearer ${token}`;
-
     const data = await sendRequest({
       url: `${ITEM_CRUD}/item/${selectedItemType}`,
       headers: {
-        Authorization: bearerToken,
+        Authorization: `Bearer ${token}`,
       },
     });
 

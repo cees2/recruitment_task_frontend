@@ -53,7 +53,6 @@ const AuthForm = ({ type }) => {
         // User logged in
         dispatch(authActions.setToken(data.token));
         dispatch(authActions.setRole(data.data.user.role));
-        localStorage.setItem("jwt", JSON.stringify(data.token));
         history.replace("/home");
       }
     } catch (err) {

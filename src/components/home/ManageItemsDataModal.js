@@ -29,8 +29,6 @@ const ManageItemsDataModal = (props) => {
       const amount = amountInputRef.current.value;
       const description = descriptionInputRef.current.value;
 
-      const bearerToken = `Bearer ${token}`;
-
       if (name) requestBody.name = name;
       if (amount) requestBody.amount = amount;
       if (description) requestBody.description = description;
@@ -55,7 +53,7 @@ const ManageItemsDataModal = (props) => {
         url,
         method,
         headers: {
-          Authorization: bearerToken,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: requestBody,

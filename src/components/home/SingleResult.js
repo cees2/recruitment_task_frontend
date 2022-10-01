@@ -29,13 +29,11 @@ const SingleResult = (props) => {
   useEffect(() => {
     try {
       const deleteItem = async () => {
-        const bearerToken = `Bearer ${token}`;
-
         await sendRequest({
           url: `${ITEM_CRUD}/${id}`,
           method: "DELETE",
           headers: {
-            Authorization: bearerToken,
+            Authorization: `Bearer ${token}`,
           },
         });
 
